@@ -11,6 +11,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["正常运行", "设备故障", "汛期加强", "暂停运行", "已撤销"],
     actions: ["升级为加强", "登记故障", "撤销站点"],
     actionTargets: {"升级为加强": "汛期加强", "登记故障": "设备故障", "撤销站点": "已撤销"},
+    pendingStatuses: ["设备故障", "暂停运行"],
+    abnormalStatuses: ["设备故障", "已撤销"],
     metrics: ["站点总数", "正常运行数", "故障站点数"],
   },
   {
@@ -22,6 +24,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["今日采集数", "超警戒站次", "待审核记录"],
   },
   {
@@ -33,6 +37,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["今日测量次数", "待审核记录", "异常记录数"],
   },
   {
@@ -44,6 +50,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["今日观测站次", "暴雨站点数", "待审核记录"],
   },
   {
@@ -55,6 +63,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采样", "检测中", "已出报告", "超标", "已复核"],
     actions: ["开始检测", "出具报告", "发起复核"],
     actionTargets: {"开始检测": "检测中", "出具报告": "已出报告", "发起复核": "已复核"},
+    pendingStatuses: ["已采样", "检测中", "超标"],
+    abnormalStatuses: ["超标"],
     metrics: ["本月检测次数", "超标报告数", "检测中样本"],
   },
   {
@@ -66,6 +76,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已测量", "待校核", "已校核", "需重测"],
     actions: ["提交校核", "确认校核", "安排重测"],
     actionTargets: {"提交校核": "待校核", "确认校核": "已校核", "安排重测": "需重测"},
+    pendingStatuses: ["已测量", "待校核", "需重测"],
+    abnormalStatuses: ["需重测"],
     metrics: ["本月测量次数", "待校核记录", "需重测记录"],
   },
   {
@@ -77,6 +89,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["正常运行", "信号异常", "低电量", "待维修", "已停用"],
     actions: ["报修设备", "确认修复", "停用设备"],
     actionTargets: {"报修设备": "待维修", "确认修复": "正常运行", "停用设备": "已停用"},
+    pendingStatuses: ["信号异常", "低电量", "待维修"],
+    abnormalStatuses: ["信号异常", "低电量", "待维修", "已停用"],
     metrics: ["设备总数", "正常运行数", "待维修数"],
   },
   {
@@ -88,6 +102,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["待整编", "整编中", "待审核", "已刊印", "已驳回"],
     actions: ["开始整编", "提交审核", "驳回整编"],
     actionTargets: {"开始整编": "整编中", "提交审核": "待审核", "驳回整编": "已驳回"},
+    pendingStatuses: ["待整编", "整编中", "待审核", "已驳回"],
+    abnormalStatuses: ["已驳回"],
     metrics: ["待整编年度", "整编中年度", "已刊印成果"],
   },
   {
@@ -99,6 +115,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["草稿", "已生效", "已调整", "已停用"],
     actions: ["发布生效", "调整阈值", "停用配置"],
     actionTargets: {"发布生效": "已生效", "调整阈值": "已调整", "停用配置": "已停用"},
+    pendingStatuses: ["草稿", "已调整"],
+    abnormalStatuses: ["已停用"],
     metrics: ["配置总数", "已生效数", "本月调整数"],
   },
   {
@@ -110,6 +128,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["今日观测井次", "待审核记录", "异常记录数"],
   },
   {
@@ -121,6 +141,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["今日观测站次", "待审核记录", "异常记录数"],
   },
   {
@@ -132,6 +154,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["正常运行", "需检修", "检修中", "已停用"],
     actions: ["安排检修", "完成检修", "停用缆道"],
     actionTargets: {"安排检修": "需检修", "完成检修": "正常运行", "停用缆道": "已停用"},
+    pendingStatuses: ["需检修", "检修中"],
+    abnormalStatuses: ["需检修", "已停用"],
     metrics: ["缆道总数", "正常运行数", "需检修数"],
   },
   {
@@ -143,6 +167,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["已采集", "待审核", "已通过", "异常值"],
     actions: ["提交审核", "确认通过", "标记异常"],
     actionTargets: {"提交审核": "待审核", "确认通过": "已通过", "标记异常": "异常值"},
+    pendingStatuses: ["已采集", "待审核", "异常值"],
+    abnormalStatuses: ["异常值"],
     metrics: ["本月采样次数", "待审核记录", "异常记录数"],
   },
   {
@@ -154,6 +180,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["通讯正常", "信号弱", "通讯中断", "待更换"],
     actions: ["登记故障", "确认恢复", "申请更换"],
     actionTargets: {"登记故障": "通讯中断", "确认恢复": "通讯正常", "申请更换": "待更换"},
+    pendingStatuses: ["信号弱", "通讯中断", "待更换"],
+    abnormalStatuses: ["信号弱", "通讯中断", "待更换"],
     metrics: ["设备总数", "通讯正常数", "中断设备数"],
   },
   {
@@ -165,6 +193,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["待安排", "已安排", "施工中", "已完成", "已验收"],
     actions: ["安排维护", "确认完工", "通过验收"],
     actionTargets: {"安排维护": "已安排", "确认完工": "已完成", "通过验收": "已验收"},
+    pendingStatuses: ["待安排", "已安排", "施工中"],
+    abnormalStatuses: [],
     metrics: ["待维护项数", "施工中项数", "本月已验收"],
   },
   {
@@ -176,6 +206,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["待送检", "送检中", "已合格", "不合格", "已停用"],
     actions: ["送出检定", "确认合格", "标记不合格"],
     actionTargets: {"送出检定": "送检中", "确认合格": "已合格", "标记不合格": "不合格"},
+    pendingStatuses: ["待送检", "送检中", "不合格"],
+    abnormalStatuses: ["不合格", "已停用"],
     metrics: ["待送检仪器", "已合格仪器", "不合格仪器"],
   },
   {
@@ -187,6 +219,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["待巡检", "已巡检", "发现故障", "已处置"],
     actions: ["完成巡检", "报告故障", "确认处置"],
     actionTargets: {"完成巡检": "已巡检", "报告故障": "发现故障", "确认处置": "已处置"},
+    pendingStatuses: ["待巡检", "发现故障"],
+    abnormalStatuses: ["发现故障"],
     metrics: ["本月巡检次数", "已巡检站点", "待处置故障"],
   },
   {
@@ -198,6 +232,8 @@ export const MODULES: ModuleMeta[] = [
     statuses: ["编制中", "待审批", "已批准", "已修订", "已废止"],
     actions: ["提交审批", "批准方案", "废止方案"],
     actionTargets: {"提交审批": "待审批", "批准方案": "已批准", "废止方案": "已废止"},
+    pendingStatuses: ["编制中", "待审批"],
+    abnormalStatuses: ["已废止"],
     metrics: ["方案总数", "已批准方案", "待审批方案"],
   },
 ]

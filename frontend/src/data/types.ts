@@ -17,6 +17,10 @@ export type ModuleMeta = {
   statuses: string[]
   actions: string[]
   actionTargets: Record<string, string>
+  /** 处于这些状态时计入「待处理」，看板与行内 pending 都以此为唯一口径 */
+  pendingStatuses: string[]
+  /** 处于这些状态时计入「异常」，看板与行内 abnormal 都以此为唯一口径 */
+  abnormalStatuses: string[]
   metrics: string[]
 }
 

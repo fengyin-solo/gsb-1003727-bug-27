@@ -41,10 +41,23 @@ export function listRows(key: string): EntryRow[] {
 }
 
 export function saveRows(key: string, rows: EntryRow[]): void {
-  const next = { ...allRows(), [key]: rows }
+  saveModules({ [key]: rows })
+}
+
+// 多模块同事务写入：先算好全量状态再一次落盘（整个仓库是单个 storage 键，setItem 本身原子）。
+// 任何一步失败都把内存缓存恢复到写入前，不留写了一半的数据。
+export function saveModules(patch: Record<string, EntryRow[]>): void {
+  const previous = allRows()
+  const next = { ...previous, ...patch }
   cache = next
-  if (typeof window !== 'undefined' && window.localStorage) {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return
+  }
+  try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+  } catch (error) {
+    cache = previous
+    throw error
   }
 }
 
