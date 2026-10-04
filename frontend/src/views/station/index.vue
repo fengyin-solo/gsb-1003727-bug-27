@@ -12,7 +12,7 @@
     </header>
 
     <div class="stat-row">
-      <article v-for="item in stats" :key="item.label" class="stat-card">
+      <article v-for="item in statCards" :key="item.label" class="stat-card">
         <span class="stat-label">{{ item.label }}</span>
         <strong class="stat-value">{{ item.value }}</strong>
       </article>
@@ -51,6 +51,8 @@
               :key="action"
               class="link"
               type="button"
+              :disabled="!canApplyAction(action, row.status)"
+              :title="canApplyAction(action, row.status) ? '' : '当前状态下不允许执行该操作'"
               @click="runAction(action, row)"
             >
               {{ action }}
@@ -74,8 +76,10 @@
 import { computed, onMounted, ref } from 'vue'
 
 import {
+  canRunAction,
   downloadEntries,
   listEntries,
+  metricValue,
   moduleMeta,
   runAction as applyAction,
 } from '@/api/local-service'
@@ -85,13 +89,20 @@ const meta = moduleMeta('station')
 const columns = ["站点编号", "站点名称", "站点类型", "所在河流", "经纬度坐标", "建站年份", "管理单位", "运行状态"]
 const actions = ["升级为加强", "登记故障", "撤销站点"]
 const statuses = ["正常运行", "设备故障", "汛期加强", "暂停运行", "已撤销"]
-const stats = [{"label": "站点总数", "value": 0}, {"label": "正常运行数", "value": 0}, {"label": "故障站点数", "value": 0}]
 
 const rows = ref<EntryRow[]>([])
 const total = ref(0)
 const errorMessage = ref('')
 const filters = ref<Record<string, string>>({})
 const filterFields = columns.slice(0, 3)
+const statCards = computed(() =>
+  meta.metrics.map((spec) => ({ label: spec.label, value: metricValue(meta, spec, rows.value) })),
+)
+
+function canApplyAction(action: string, status: string): boolean {
+  return canRunAction(meta, action, status)
+}
+
 const statusSummary = computed(() =>
   statuses.map((status: string) => ({
     status,

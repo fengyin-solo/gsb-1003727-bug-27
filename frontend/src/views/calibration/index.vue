@@ -12,7 +12,7 @@
     </header>
 
     <div class="stat-row">
-      <article v-for="item in stats" :key="item.label" class="stat-card">
+      <article v-for="item in statCards" :key="item.label" class="stat-card">
         <span class="stat-label">{{ item.label }}</span>
         <strong class="stat-value">{{ item.value }}</strong>
       </article>
@@ -51,6 +51,8 @@
               :key="action"
               class="link"
               type="button"
+              :disabled="!canApplyAction(action, row.status)"
+              :title="canApplyAction(action, row.status) ? '' : '当前状态下不允许执行该操作'"
               @click="runAction(action, row)"
             >
               {{ action }}
@@ -74,8 +76,10 @@
 import { computed, onMounted, ref } from 'vue'
 
 import {
+  canRunAction,
   downloadEntries,
   listEntries,
+  metricValue,
   moduleMeta,
   runAction as applyAction,
 } from '@/api/local-service'
@@ -85,13 +89,20 @@ const meta = moduleMeta('calibration')
 const columns = ["记录编号", "仪器编号", "仪器名称", "检定单位", "检定日期", "有效期至", "检定结论", "检定状态"]
 const actions = ["送出检定", "确认合格", "标记不合格"]
 const statuses = ["待送检", "送检中", "已合格", "不合格", "已停用"]
-const stats = [{"label": "待送检仪器", "value": 0}, {"label": "已合格仪器", "value": 0}, {"label": "不合格仪器", "value": 0}]
 
 const rows = ref<EntryRow[]>([])
 const total = ref(0)
 const errorMessage = ref('')
 const filters = ref<Record<string, string>>({})
 const filterFields = columns.slice(0, 3)
+const statCards = computed(() =>
+  meta.metrics.map((spec) => ({ label: spec.label, value: metricValue(meta, spec, rows.value) })),
+)
+
+function canApplyAction(action: string, status: string): boolean {
+  return canRunAction(meta, action, status)
+}
+
 const statusSummary = computed(() =>
   statuses.map((status: string) => ({
     status,

@@ -41,11 +41,22 @@ export function listRows(key: string): EntryRow[] {
 }
 
 export function saveRows(key: string, rows: EntryRow[]): void {
-  const next = { ...allRows(), [key]: rows }
-  cache = next
-  if (typeof window !== 'undefined' && window.localStorage) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+  commitRows([[key, rows]])
+}
+
+// 事务提交：一批模块要么整体生效、要么整体不动。
+// 先基于当前快照拼好完整的新快照，持久化成功之后才替换内存缓存；
+// localStorage 写入抛错时缓存保持原样，调用方与页面看到的仍是回退后的状态。
+export function commitRows(patches: [string, EntryRow[]][]): void {
+  const next: Record<string, EntryRow[]> = { ...allRows() }
+  for (const [key, rows] of patches) {
+    next[key] = rows
   }
+  const serialized = JSON.stringify(next)
+  if (typeof window !== 'undefined' && window.localStorage) {
+    window.localStorage.setItem(STORAGE_KEY, serialized)
+  }
+  cache = JSON.parse(serialized) as Record<string, EntryRow[]>
 }
 
 export function resetRows(key: string): EntryRow[] {
